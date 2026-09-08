@@ -26,6 +26,6 @@
         </tr>
         @endforeach
     </table>
-    <a href="{{ route('products.index')}}">Back to List</a>
+    <a href="{{ route('products.index')}}">Back to Product List</a>
 </body>
 </html>

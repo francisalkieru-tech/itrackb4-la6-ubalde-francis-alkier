@@ -1,9 +1,11 @@
-# Question
-Q1: Explain the order you placed your featured route and your detail route in, and what would happen if you swapped them.
-Answer: Based my experience when i place the route of the feature in the buttom of id route when i test it i  got an error which is the 404 beacuse the featured is not valid the id thats why laravel thinks the featured is the id value of being searched and since there is no product with that id that why it triggers the abort which 404 error.
+Q1. You added a second filter without adding a single route. Explain why no new route was needed. Your answer should say something about what the router actually looks at.
+Answer: no new route needed becuase both filter use the same data path, the mainly router looks at the url path when macthing a route, while the category and stock value after array query parameters handled by the controller.
 
-Q2: What happens when someone visits an id that does not exist in your data, and what did you write to make that happen?
-Answer: If someone visit the visits the page url with id that doesn't exist will the function is gonna check first using !isset if that id have already exits in the data or not. If not it will display the 404 error which triggered by abort(404).
+Q2. Suppose you had built both filters as route parameters instead. Describe what the URL for 'year 4 only, no course filter' would have to look like, and why.
+Answer: if the both filters were route parameter the url have 4 only and no course filter so it could be something like student/all/4 which all means that no course filter is selected, while 4 means year 4. it needs to be there beacuse route parameters are part of the URL path.
 
-Q3: Why do your links use route names instead of typed URLs? Give one concrete thing that would break if they did not.
-Answer: I use route names instead of typed URLs so that my links still work even if I change the routes name URL. When I test it I change my list route from products to store and my Back to Product List link still worked because it use route products.index
+Q3.Your navigation link stays marked on a detail page and also when a filter is applied. Only one of those two needed a change to your pattern. Say which one, and why the other needed nothing.
+Answer: the detail page needed the change because the URL becomes something like /products/1, so I used products* to also match the longer path. The filter did not need another change because the filter is in the query string, and request only checks the path.
+
+Q4. You deleted your old filter method but kept the empty store and update methods, even though none of the three can be reached by a URL. Explain the difference between them.
+Answer: I deleted the old filter method because the filtering is now handled by the index method, so the old method is no longer needed. The empty store and update methods are different because they are Laravel resource methods that can still be used later if I add product creation and updating.

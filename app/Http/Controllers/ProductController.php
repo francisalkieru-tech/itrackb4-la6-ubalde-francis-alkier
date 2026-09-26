@@ -9,10 +9,33 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-         return view('products.index', ['products' => $this->products()]);
+        $category = $request->query('category', '');
+        $stock = $request->query('stock', '');
+
+        $products = $this->products();
+
+        if($category){
+            $products = array_filter($products, function($product) use($category) {
+                return $product['category'] === $category;
+            });
+        }
+
+        if($stock){
+            $products = array_filter($products, function ($product) use($stock){
+                return $stock === 'low' ? $product['stock'] < 10 : $product['stock'] >= 10;
+            });
+        }
+
+        return view('products.index', [
+            'products' => $products,
+            'category' => $category,
+            'stock'    => $stock,
+        ]);
     }
+    
+    //return view('products.index', ['products' => $this->products()]);
 
     /**
      * Show the form for creating a new resource.
@@ -64,16 +87,6 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function filter($category = null) {
-        $products = $this->products();
-        if($category){
-            $products = array_filter($products, function($product) use($category) {
-                return $product['category'] === $category;
-            });
-        }
-        return view('products.filter',['products' => $products, 'activeCategory' => $category]);
     }
 
     private function products()
